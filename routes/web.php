@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Dashboard\DashboardProductController;
+use App\Http\Controllers\Users\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,12 +15,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*
+|--------------------------------------------------------------------------
+| Dashboard Route
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/dashboard', [DashboardProductController::class, 'index'])->name('dashboard');
+
+/*
+|--------------------------------------------------------------------------
+| User Route
+|--------------------------------------------------------------------------
+*/
+
+
+
 Route::get('/', function () {
-    return view('home');
+    return view('dashboard.home', [
+    ]);
 });
 
 Route::get('/home', function () {
-    return view('home');
+    return view('users.home', [
+    ]);
 });
 
-Route::get('/product', [ProductController::class, 'index']);
+Route::get('/product', [ProductController::class, 'index'])->name('user_product');
+
+Route::get('/product/{product:product_slug}', [ProductController::class, 'detail']);

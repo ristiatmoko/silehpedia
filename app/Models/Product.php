@@ -9,6 +9,8 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['product_id'];
+
 
     public function category()
     {
