@@ -22,7 +22,20 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/dashboard', [DashboardProductController::class, 'index'])->middleware('auth')->name('dashboard');
+
+Route::get('/dashboard', function() {
+    return view('dashboard.home');
+})->middleware('auth');
+
+
+//Route::get('/dashboard', [DashboardProductController::class, 'index'])->middleware('auth')->name('dashboard');
+//Route::get('/dashboard/product', [DashboardProductController::class, 'product'])->name('dashboard_product');
+
+Route::resource('/dashboard/product', DashboardProductController::class);
+
+Route::get('/dashboard/product/checkSlug', [DashboardProductController::class, 'checkSlug']);
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,5 +68,7 @@ Route::resource('/user', UserController::class);
 
 
 Route::get('/product', [ProductController::class, 'index'])->name('user_product');
+
+
 
 Route::get('/product/{product:product_slug}', [ProductController::class, 'detail']);

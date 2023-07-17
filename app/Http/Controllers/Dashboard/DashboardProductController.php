@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Product;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DashboardProductController extends Controller
 {
@@ -12,8 +16,10 @@ class DashboardProductController extends Controller
      */
     public function index()
     {
-        return view('dashboard.home', [
-            'title' => 'Dashboard'
+
+        return view('dashboard.product.index', [
+//            'products' => Product::latest()->filter(\request(['search']))->paginate(500),
+            'products' => Product::all()
         ]);
     }
 
@@ -22,7 +28,10 @@ class DashboardProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.product.create', [
+            'categories' => Category::all()
+
+        ]);
     }
 
     /**
@@ -30,7 +39,29 @@ class DashboardProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        return $request->all();
+
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'slug' => 'required|unique:products',
+//            'image' => 'image|file|max:1024',
+            'category_id' => 'required',
+            'price' => 'required',
+            'stock' => 'required',
+            'description' => 'required'
+        ]);
+
+//        if ($request->file('image')) {
+//            $validatedData['image'] = $request->file('image')->store('post-image');
+//        }
+
+        $validatedData['user_id'] = auth()->user()->id;
+        $validatedData['excerpt'] = Str::limit(strip_tags($request->description), 200);
+
+        Product::query()->create($validatedData);
+
+
+        return redirect('/dashboard/product')->with('success', 'New product has been added!');
     }
 
     /**
@@ -64,4 +95,12 @@ class DashboardProductController extends Controller
     {
         //
     }
+
+    public function checkSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(Product::class, 'slug', $request->name);
+        return response()->json(['slug' => $slug]);
+    }
+
+
 }

@@ -20,6 +20,8 @@ class ProductFactory extends Factory
             'name' => $this->faker->sentence(mt_rand(1,3)),
             'slug' => $this->faker->slug(),
             'price' => $this->faker->randomNumber(5, true),
+            'excerpt' => $this->faker->paragraph(1),
+            'image' => $this->faker->paragraph(1),
             'description' => $this->faker->paragraph(),
             'stock' => $this->faker->randomDigit(2),
             'user_id' => mt_rand(1,5),

@@ -28,6 +28,17 @@
     <link rel="stylesheet" href="{{ asset('dashboard_assets/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('dashboard_assets/plugins/summernote/summernote-bs4.min.css') }}">
+
+{{--    datatable--}}
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+
+{{--    trix edtor--}}
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+    <style>
+        trix-toolbar [data-trix-button-group="file-tools"] {
+            display: none;
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -88,7 +99,14 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('dashboard_assets/dist/js/pages/dashboard.js') }}"></script>
 
-{{--@yield('script')--}}
+{{--datatable--}}
+
+<script src="//cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+
+{{--trix editor--}}
+<script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+
+@yield('js')
 
 @stack('scripts')
 </body>

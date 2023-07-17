@@ -15,11 +15,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id');
             $table->foreignId('user_id');
-            $table->string('name');
             $table->string('slug')->unique();
+            $table->string('image')->nullable();
+            $table->string('name');
             $table->string('price');
-            $table->text('description');
             $table->text('stock');
+            $table->text('excerpt');
+            $table->text('description');
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }
