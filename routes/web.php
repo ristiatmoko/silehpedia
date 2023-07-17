@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard\DashboardProductController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Users\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/dashboard', [DashboardProductController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [DashboardProductController::class, 'index'])->middleware('auth')->name('dashboard');
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,7 @@ Route::get('/dashboard', [DashboardProductController::class, 'index'])->name('da
 
 
 Route::get('/', function () {
-    return view('dashboard.home', [
+    return view('users.home', [
     ]);
 });
 
@@ -40,6 +41,18 @@ Route::get('/home', function () {
     return view('users.home', [
     ]);
 });
+
+Route::get('/register', [UserController::class, 'index'])->middleware('guest')->name('register');
+Route::post('/register', [UserController::class, 'store']);
+
+Route::get('/login', [UserController::class, 'login'])->middleware('guest')->name('login');
+Route::post('/login', [UserController::class, 'authenticate']);
+
+Route::post('/logout', [UserController::class, 'logout']);
+
+
+Route::resource('/user', UserController::class);
+
 
 Route::get('/product', [ProductController::class, 'index'])->name('user_product');
 

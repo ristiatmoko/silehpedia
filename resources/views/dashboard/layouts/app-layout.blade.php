@@ -88,7 +88,7 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('dashboard_assets/dist/js/pages/dashboard.js') }}"></script>
 
-@yield('script')
+{{--@yield('script')--}}
 
 @stack('scripts')
 </body>
